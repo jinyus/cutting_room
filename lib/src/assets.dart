@@ -1,5 +1,4 @@
 // ignore: deprecated_member_use
-import 'dart:cli';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
@@ -91,7 +90,8 @@ class Asset {
   /// [findAbsolutePathToPackageAsset], and falls back to creating a
   /// new file with the asset's bytes, like [inflateToLocalFile].
   String findOrInflate([Directory? destinationDirectory]) {
-    return findAbsolutePathToPackageAsset() ?? inflateToLocalFile(destinationDirectory);
+    return findAbsolutePathToPackageAsset() ??
+        inflateToLocalFile(destinationDirectory);
   }
 
   /// Attempts to find and return the absolute file path to this
@@ -114,14 +114,15 @@ class Asset {
       // waitFor is strongly discouraged in general, but it is accepted as the
       // only reasonable way to load package assets outside of Flutter.
       // ignore: deprecated_member_use
-      final absoluteUri = waitFor(future, timeout: const Duration(seconds: 5));
+      final absoluteUri = null;
       assetsLog.fine("Resolved asset URI: $absoluteUri");
       if (absoluteUri != null) {
         final file = File.fromUri(absoluteUri);
         if (file.existsSync()) {
           return file.path;
         }
-        assetsLog.warning("Resolved asset absolute URI, but file doesn't exist");
+        assetsLog
+            .warning("Resolved asset absolute URI, but file doesn't exist");
         return null;
       } else {
         // Last ditch attempt: look in local folder
